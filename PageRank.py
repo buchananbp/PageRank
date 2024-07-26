@@ -8,6 +8,7 @@ PageRank Implementation
 """
 import pandas as pd
 import networkx as nx
+import time
 
 MAX_ITERATIONS = 100
 DAMPING_FACTOR = 0.85
@@ -29,18 +30,23 @@ G = nx.from_pandas_edgelist(df, "FromNodeId", "ToNodeId", create_using=nx.DiGrap
 # Intialize all nodes to have the same pagerank
 pageRank = {node: 1/len(G) for node in G.nodes}
 
+startTime = time.time()
 # For each node (page) calculate its specific page rank based on the the nodes and edges of the graph.
 for iteration in range(MAX_ITERATIONS):
     new_pageRank = {}
     for node in G.nodes:
         rank_sum = sum(pageRank[neighbor] / len(list(G.neighbors(neighbor))) for neighbor in G.predecessors(node))
         new_pageRank[node] = (1 - DAMPING_FACTOR) / len(G) + DAMPING_FACTOR * rank_sum
-    # During every iteration, check if the ranks have surpassed the convergence threshold.
+    # If the page rank scores have stabilized, exit the loop.
     if max(abs(new_pageRank[node] - pageRank[node]) for node in G.nodes) < CONVERGENCE_THRESHOLD:
         print(f"\n*** PageRank has surpassed the convergence threshold at iteration: {iteration} ***")
         break
     # Update the Pagerank value for the next iteration.
     pageRank = new_pageRank
+
+runningTime = time.time() - startTime
+print(f"Program executed in {runningTime} seconds.\n")
+
 
 # Normalization of PageRank Values sum to 100%
 rank_sum = sum(pageRank.values())
@@ -54,8 +60,8 @@ if (totalRank != 100):
     print(f"The total rank does NOT equal 100. The actual total rank is: {totalRank}%\n")
 else:
     print(f"The rank sum has the correct value of: {totalRank}%\n")
-    
-# Prints the first ten values of the pageRank dictionary
+
+# Prints the first ten Pages and their ranks.
 print("Here are the first 10 values:\n")
 print("Node | Rank")
 print("------------------------------")
