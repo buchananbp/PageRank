@@ -45,6 +45,7 @@ for iteration in range(MAX_ITERATIONS):
 # Normalization of PageRank Values sum to 100%
 rank_sum = sum(pageRank.values())
 pageRank = {node: rank / rank_sum for node, rank in pageRank.items()}
+
 # Ensure the sum of the rank values == 100%
 # PageRank values should sum to 1, so we multiply by 100 to get the percentage
 # Rounded the number up, since the number will equal 9.99 repeating
@@ -53,7 +54,8 @@ if (totalRank != 100):
     print(f"The total rank does NOT equal 100. The actual total rank is: {totalRank}%\n")
 else:
     print(f"The rank sum has the correct value of: {totalRank}%\n")
-
+    
+# Prints the first ten values of the pageRank dictionary
 print("Here are the first 10 values:\n")
 print("Node | Rank")
 print("------------------------------")
