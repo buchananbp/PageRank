@@ -35,7 +35,7 @@ for iteration in range(MAX_ITERATIONS):
     for node in G.nodes:
         rank_sum = sum(pageRank[neighbor] / len(list(G.neighbors(neighbor))) for neighbor in G.predecessors(node))
         new_pageRank[node] = (1 - DAMPING_FACTOR) / len(G) + DAMPING_FACTOR * rank_sum
-    # *** ChatGPT was consulted to figure out how to handle convergence. ***
+    # During every iteration, check if the ranks have surpassed the convergence threshold.
     if max(abs(new_pageRank[node] - pageRank[node]) for node in G.nodes) < CONVERGENCE_THRESHOLD:
         print(f"\n*** PageRank has surpassed the convergence threshold at iteration: {iteration} ***")
         break
