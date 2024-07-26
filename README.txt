@@ -7,5 +7,5 @@ ie:
       -com-dblp.ungraph.txt
   -PageRank.py
 
-2. To change the dataset being used in the code, change the filePath variable in the data frame (df) variable from "filePath" to "bonusFilePath"
+2. To change the dataset being used in the code, change the filePath variable located in the data frame (df) variable from "filePath" to "bonusFilePath"
 
