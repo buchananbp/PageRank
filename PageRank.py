@@ -21,7 +21,7 @@ filePath = "Dataset/CA-GrQc.txt"
 
 # Create a dataframe from the given data using the pandas library
 # To change the dataset used, change "filePath" to "bonusFilePath"
-df = pd.read_csv(bonusFilePath, delimiter='\t', comment='#', names=['FromNodeId', 'ToNodeId'])
+df = pd.read_csv(filePath, delimiter='\t', comment='#', names=['FromNodeId', 'ToNodeId'])
 
 # Generate a directed graph using the networkx library
 G = nx.from_pandas_edgelist(df, "FromNodeId", "ToNodeId", create_using=nx.DiGraph)
@@ -42,6 +42,7 @@ for iteration in range(MAX_ITERATIONS):
     # Update the Pagerank value for the next iteration.
     pageRank = new_pageRank
 
+# Normalization of PageRank Values sum to 100%
 rank_sum = sum(pageRank.values())
 pageRank = {node: rank / rank_sum for node, rank in pageRank.items()}
 # Ensure the sum of the rank values == 100%
@@ -53,13 +54,13 @@ if (totalRank != 100):
 else:
     print(f"The rank sum has the correct value of: {totalRank}%\n")
 
-# print("Here are the first 10 values:\n")
-# print("Node | Rank")
-# print("------------------------------")
-# for i, (key, value) in enumerate(pageRank.items()):
-#     if i >= 10:
-#         break
-#     print(key, value)
+print("Here are the first 10 values:\n")
+print("Node | Rank")
+print("------------------------------")
+for i, (key, value) in enumerate(pageRank.items()):
+    if i >= 10:
+        break
+    print(key, value)
 
 
 # print(pageRank)
